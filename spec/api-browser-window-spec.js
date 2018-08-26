@@ -1314,6 +1314,68 @@ describe('BrowserWindow module', () => {
       })
     })
 
+    describe('"enableRemoteModule" option', () => {
+      it('enables the remote module by default', async () => {
+        const preload = path.join(fixtures, 'module', 'preload-remote.js')
+        w.destroy()
+        w = new BrowserWindow({
+          show: false,
+          webPreferences: {
+            preload: preload
+          }
+        })
+        w.loadURL(`file://${path.join(fixtures, 'api', 'blank.html')}`)
+        const [, remote] = await emittedOnce(ipcMain, 'remote')
+        expect(remote).to.equal('object')
+      })
+
+      it('enables the remote module by default (sandboxed)', async () => {
+        const preload = path.join(fixtures, 'module', 'preload-remote.js')
+        w.destroy()
+        w = new BrowserWindow({
+          show: false,
+          webPreferences: {
+            preload: preload,
+            sandbox: true
+          }
+        })
+        w.loadURL(`file://${path.join(fixtures, 'api', 'blank.html')}`)
+        const [, remote] = await emittedOnce(ipcMain, 'remote')
+        expect(remote).to.equal('object')
+      })
+
+      it('disables the remote module when false', async () => {
+        const preload = path.join(fixtures, 'module', 'preload-remote.js')
+        w.destroy()
+        w = new BrowserWindow({
+          show: false,
+          webPreferences: {
+            preload: preload,
+            enableRemoteModule: false
+          }
+        })
+        w.loadURL(`file://${path.join(fixtures, 'api', 'blank.html')}`)
+        const [, remote] = await emittedOnce(ipcMain, 'remote')
+        expect(remote).to.equal('undefined')
+      })
+
+      it('disables the remote module when false (sandboxed)', async () => {
+        const preload = path.join(fixtures, 'module', 'preload-remote.js')
+        w.destroy()
+        w = new BrowserWindow({
+          show: false,
+          webPreferences: {
+            preload: preload,
+            sandbox: true,
+            enableRemoteModule: false
+          }
+        })
+        w.loadURL(`file://${path.join(fixtures, 'api', 'blank.html')}`)
+        const [, remote] = await emittedOnce(ipcMain, 'remote')
+        expect(remote).to.equal('undefined')
+      })
+    })
+
     describe('"sandbox" option', () => {
       function waitForEvents (emitter, events, callback) {
         let count = events.length
