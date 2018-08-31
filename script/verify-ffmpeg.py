@@ -15,8 +15,12 @@ SOURCE_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 def main():
   args = parse_args()
 
+  print 'verify-ffmpeg: args.source_root = ' + args.source_root
+
   initial_app_path = os.path.join(os.path.abspath(args.source_root), args.build_dir)
+  print 'verify-ffmpeg: initial_app_path = ' + initial_app_path
   app_path = create_app_copy(initial_app_path)
+  print 'verify-ffmpeg: app_path = ' + app_path
 
   # Those are the same in the original app and its copy.
   # So it is ok to retrieve them from the original build dir and use in the copy.
