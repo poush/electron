@@ -29,7 +29,7 @@ build_script:
   - ninja -C out/ffmpeg third_party/ffmpeg
   - ninja -C out/Default electron:electron_dist_zip
 test_script:
-  - if "%GN_CONFIG%"=="testing" ( echo Verifying non proprietary ffmpeg & python electron\script\verify-ffmpeg.py -c Default --source-root %cd% --ffmpeg-path %cd%\out\ffmpeg )
+  - if "%GN_CONFIG%"=="testing" ( echo Verifying non proprietary ffmpeg & python electron\script\verify-ffmpeg.py --build-dir out\Default --source-root %cd% --ffmpeg-path out\ffmpeg )
   - ps: >-
       if ($env:GN_CONFIG -eq 'testing') {
         ninja -C out/Default third_party/electron_node:headers
