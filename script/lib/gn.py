@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import subprocess
+import sys
 
 from util import scoped_cwd
 
@@ -9,10 +10,16 @@ class GNProject:
   def __init__(self, out_dir):
     self.out_dir = out_dir
 
+  def _get_executable_name():
+    if sys.platform == "win32":
+      return 'gn.bat'
+
+    return 'gn'
+
   def run(self, command_name, command_args):
     print 'gn.run: out_dir = ' + self.out_dir
     with scoped_cwd(self.out_dir):
-      complete_args = ['gn', command_name, '.'] + command_args
+      complete_args = [self._get_executable_name(), command_name, '.'] + command_args
       print 'gn.run: complete_args = ' + ', '.join(complete_args)
       return subprocess.check_output(complete_args)
 
