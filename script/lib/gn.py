@@ -20,7 +20,7 @@ class GNProject:
     print 'gn.run: out_dir = ' + self.out_dir
     with scoped_cwd(self.out_dir):
       complete_args = [self._get_executable_name(), command_name, '.'] + command_args
-      print 'gn.run: complete_args = ' + ', '.join(complete_args)
+      print 'gn.run: complete_args = ' + ' '.join(complete_args)
       return subprocess.check_output(complete_args)
 
   def args(self):
