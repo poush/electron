@@ -10,7 +10,7 @@ class GNProject:
   def __init__(self, out_dir):
     self.out_dir = out_dir
 
-  def _get_executable_name():
+  def _get_executable_name(self):
     if sys.platform == 'win32':
       return 'gn.bat'
 
